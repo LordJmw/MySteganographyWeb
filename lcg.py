@@ -50,9 +50,8 @@ def generate_s2(a: int, C: int, x0: int, n: int) -> list:
         if x == 0:
             x = 1
         
-        # Mapping ke range 1-3
-        mapped = (x % 3) + 1
-        result.append(mapped)
+        
+        result.append(x)
     return result
 
 
