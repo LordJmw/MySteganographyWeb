@@ -193,7 +193,7 @@ Menentukan **berapa bit** yang disisipkan per channel (1, 2, atau 3 bit) via LCG
 ```
 Xₙ₊₁ = (a × Xₙ + C) mod 4
 Jika hasil = 0 → ubah jadi 1
-Nilai akhir = (hasil % 3) + 1   →  rentang 1–3
+hasil berada dalam rentang 1-3
 ```
 
 Seed S2 diturunkan langsung dari kunci `(a, C, X0)` sehingga selalu konsisten antara proses embed dan extract tanpa perlu file pendamping.
