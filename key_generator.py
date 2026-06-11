@@ -51,6 +51,15 @@ def generate_keys(first_name: str, last_name: str) -> dict:
     xor12 = xor_bits(bin1, bin2)
     xor_result = xor_bits(xor12, bin3)
     
+    #bagian nama depan
+    b1 = ascii_to_bin(first_4[0])
+    b2 = ascii_to_bin(first_4[1])
+    b3 = ascii_to_bin(first_4[2])
+    b4 = ascii_to_bin(first_4[3])
+    first_xor = xor_bits(xor_bits(xor_bits(b1, b2), b3), b4)  # tetap 8 bit
+
+    xor_result = xor_bits(xor_result, first_xor)  # gabung dengan hasil nama belakang
+    
     print(f"Hasil XOR: {xor_result} (biner)")
     
     # 4. Ekstrak a, C, X0

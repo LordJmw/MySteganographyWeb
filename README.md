@@ -116,23 +116,35 @@ Sistem bekerja dalam 5 komponen utama yang saling terhubung:
 
 ### 1. Pembangkitan Kunci (`key_generator.py`)
 
-Kunci `a`, `C`, `X0` untuk LCG dihasilkan dari nama belakang:
+Kunci `a`, `C`, `X0` untuk LCG dihasilkan dari kombinasi nama depan dan nama belakang:
 
 ```
-Nama belakang: "Wong"
-→ Ambil 3 huruf terakhir: "ong"
-→ Konversi ke biner 8-bit:
+Nama depan: "James", Nama belakang: "Wong"
+
+LANGKAH 1 — XOR 3 huruf terakhir nama belakang:
     'o' = 01101111
     'n' = 01101110
     'g' = 01100111
-→ XOR ketiganya:
-    01101111 ⊕ 01101110 = 00000001
-    00000001 ⊕ 01100111 = 01100110
-→ Ekstrak dari 8 bit hasil:
+    01101111 XOR 01101110 = 00000001
+    00000001 XOR 01100111 = 01100110  <- hasil sementara
+
+LANGKAH 2 — Fold 4 huruf pertama nama depan jadi 8 bit:
+    'j' = 01101010
+    'a' = 01100001
+    'm' = 01101101
+    'e' = 01100101
+    01101010 XOR 01100001 = 00001011
+    00001011 XOR 01101101 = 01100110
+    01100110 XOR 01100101 = 00000011  <- hasil fold nama depan
+
+LANGKAH 3 — Gabungkan:
+    01100110 XOR 00000011 = 01100101  <- hasil akhir 8 bit
+
+LANGKAH 4 — Ekstrak a, C, X0:
     3 bit pertama → a  = 011 = 3
     3 bit tengah  → C  = 001 = 1
-    2 bit terakhir→ X0 = 10  = 2
-→ Hasil: a=3, C=1, X0=2
+    2 bit terakhir→ X0 = 01  = 1
+    Hasil: a=3, C=1, X0=1
 ```
 
 Jika `a` atau `C` bernilai 0, otomatis diubah menjadi 1.
@@ -273,7 +285,7 @@ AppSteganografi/
 |------|----------------|
 | `app.py` | Antarmuka pengguna berbasis Streamlit |
 | `stego_core.py` | Orkestrasi proses embed dan extract |
-| `key_generator.py` | Derivasi kunci `a`, `C`, `X0` dari nama |
+| `key_generator.py` | Derivasi kunci `a`, `C`, `X0` dari nama depan dan belakang |
 | `position_gen.py` | Urutan posisi piksel via primitive root |
 | `lcg.py` | Deret S1 (channel) dan S2 (jumlah bit) |
 | `utils.py` | Konversi biner, XOR, embed/extract LSB |
