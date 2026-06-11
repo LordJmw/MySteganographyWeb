@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+
+# File steganografi sementara dan hasil output
+stego_result_metadata*
+stego_result.png
+temp_cover.png
+temp_stego.png
